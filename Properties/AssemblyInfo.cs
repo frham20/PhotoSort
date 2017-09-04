@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("PhotoSort")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Francois Hamel")]
 [assembly: AssemblyProduct("PhotoSort")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]

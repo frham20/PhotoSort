@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,8 @@ namespace PhotoSort.Views
         {
             get
             {
-                return "PhotoSort";
+                var version = Assembly.GetExecutingAssembly().GetName().Version;
+                return string.Format("PhotoSort v{0}.{1} build {2}", version.Major, version.Minor, version.Build);
             }
         }
 

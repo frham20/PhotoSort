@@ -9,10 +9,21 @@
     <Window.DataContext>
         <local:MainWindowViewModel></local:MainWindowViewModel>
     </Window.DataContext>
-    <Grid>
-        <ListBox>
-            
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0">Source Folders:</TextBlock>
+        <ListBox Grid.Row="1" Margin="0,8,0,0">
         </ListBox>
-        
+        <TextBlock Grid.Row="2" Margin="0,8,0,0">Destination Folder:</TextBlock>
+        <TextBox Grid.Row="3" Margin="0,8,0,0"></TextBox>
+        <Button Grid.Row="4" Margin="0,8,0,0" HorizontalAlignment="Right" MinWidth="100">Process</Button>
     </Grid>
 </Window>
+
+    

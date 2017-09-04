@@ -64,6 +64,10 @@
     </Compile>
     <Compile Include="AppData.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="GPSCoordinates.cs" />
+    <Compile Include="ILocationProvider.cs" />
+    <Compile Include="Location.cs" />
+    <Compile Include="Photo.cs" />
     <Compile Include="Views\Commands\RelayCommand.cs" />
     <Compile Include="Views\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
