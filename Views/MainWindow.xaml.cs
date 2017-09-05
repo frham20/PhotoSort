@@ -111,11 +111,11 @@ namespace PhotoSort.Views
             if (filenames == null)
                 return;
 
-            var curDirectories = new HashSet<string>(AppData.Current.Config.Directories);
+            var curDirectories = new HashSet<string>(AppData.Current.Config.SourceDirectories);
             var validDirectories = new HashSet<string>(filenames.Select(x => System.IO.Directory.Exists(x) ? x : System.IO.Path.GetDirectoryName(x))
                                                                 .Where(x => !curDirectories.Contains(x)));
             foreach (var dir in validDirectories)
-                AppData.Current.Config.Directories.Add(dir);
+                AppData.Current.Config.SourceDirectories.Add(dir);
         }
 
         private void SourceFolderList_DragOver(object sender, DragEventArgs e)
