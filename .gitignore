@@ -5,3 +5,8 @@
 /.vs/PhotoSort/v15
 /bin/Debug
 /obj/Debug
+/obj/Release
+/.vs
+/PhotoSort/.vs/PhotoSort/v15
+/PhotoSort/bin/Debug
+/PhotoSort/obj
