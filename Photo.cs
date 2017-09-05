@@ -12,6 +12,7 @@ namespace PhotoSort
     {
         private string filename = string.Empty;
         private DateTime dateTaken = DateTime.MinValue;
+        private GPSCoordinates gps = null;
 
         public string Filename
         {
@@ -19,16 +20,42 @@ namespace PhotoSort
             {
                 return this.filename;
             }
-            set
+            private set
             {
                 this.filename = value;
                 this.RaisePropertyChanged();
             }
         }
 
+        public DateTime DateTaken
+        {
+            get
+            {
+                return this.dateTaken;
+            }
+            private set
+            {
+                this.dateTaken = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public GPSCoordinates GPS
+        {
+            get
+            {
+                return this.gps;
+            }
+            private set
+            {
+                this.gps = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
         public Photo(string filename)
         {
-
+            this.filename = filename;
         }
 
         private void LoadMetaData()
@@ -37,6 +64,16 @@ namespace PhotoSort
             {
                 var decoder = BitmapDecoder.Create(bmpStream, BitmapCreateOptions.None, BitmapCacheOption.None);
                 var metaData = decoder.Metadata;
+                if (metaData == null)
+                    return;
+
+                //extract date
+                if (DateTime.TryParse(metaData.DateTaken, out var date))
+                    this.DateTaken = date;
+
+                //extract GPS Coordinates
+                //metaData.
+
             }
         }
     }

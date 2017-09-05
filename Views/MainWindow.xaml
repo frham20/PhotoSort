@@ -18,7 +18,7 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0">Source Folders:</TextBlock>
-        <ListBox Grid.Row="1" Margin="0,8,0,0">
+        <ListBox x:Name="sourceFolderList" ItemsSource="{Binding SourceDirectories}" Grid.Row="1" Margin="0,8,0,0">
         </ListBox>
         <TextBlock Grid.Row="2" Margin="0,8,0,0">Destination Folder:</TextBlock>
         <TextBox Grid.Row="3" Margin="0,8,0,0"></TextBox>

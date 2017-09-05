@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,12 +10,30 @@ namespace PhotoSort.Views
 {
     public class MainWindowViewModel : NotifyPropertyChanged
     {
+        private ObservableCollection<string> selectedSourceDirectories = new ObservableCollection<string>();
+
         public string Title
         {
             get
             {
                 var version = Assembly.GetExecutingAssembly().GetName().Version;
-                return string.Format("PhotoSort v{0}.{1} build {2}", version.Major, version.Minor, version.Build);
+                return $"PhotoSort v{version.Major}.{version.Minor} build {version.Build}";
+            }
+        }
+
+        public ObservableCollection<string> SourceDirectories
+        {
+            get
+            {
+                return AppData.Current.Config.Directories;
+            }
+        }
+
+        public ObservableCollection<string> SelectedSourceDirectories
+        {
+            get
+            {
+                return this.selectedSourceDirectories;
             }
         }
 
