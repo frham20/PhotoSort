@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotoSort.Views.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -37,9 +38,22 @@ namespace PhotoSort.Views
             }
         }
 
+        public RelayCommand RemoveSelectedSourceDirectoriesCommand { get; private set; }
+
         public MainWindowViewModel()
         {
+             this.RemoveSelectedSourceDirectoriesCommand = new RelayCommand(this.RemoveSelectedItems);
+        }
 
+        private void RemoveSelectedItems(object parameter)
+        {
+            var selectionCopy = this.selectedSourceDirectories.ToList();
+            foreach(var item in selectionCopy)
+                AppData.Current.Config.Directories.Remove(item);
+
+            this.SelectedSourceDirectories.Clear();
+            if (this.SourceDirectories.Count > 0)
+                this.SelectedSourceDirectories.Add(this.SourceDirectories[0]);               
         }
     }
 }

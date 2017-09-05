@@ -14,8 +14,7 @@ namespace PhotoSort
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
-            var handler = this.PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

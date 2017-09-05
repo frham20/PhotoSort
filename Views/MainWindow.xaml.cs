@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,19 @@ namespace PhotoSort.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel vm = null;
+        private bool updatingVM = false;
+        private bool updatingUI = false;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.vm = this.DataContext as MainWindowViewModel;
+            if(this.vm != null)
+                this.vm.SelectedSourceDirectories.CollectionChanged += SelectedSourceDirectories_CollectionChanged;
+
+            this.DataContextChanged += MainWindow_DataContextChanged;
 
             this.sourceFolderList.SelectionMode = SelectionMode.Extended;
             this.sourceFolderList.SelectionChanged += SourceFolderList_SelectionChanged;
@@ -33,17 +44,65 @@ namespace PhotoSort.Views
             this.sourceFolderList.Drop += SourceFolderList_Drop;
         }
 
-        private void SourceFolderList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectedSourceDirectories_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            var vm = this.DataContext as MainWindowViewModel;
-            if (vm == null)
+            if (this.updatingVM)
                 return;
 
+            this.updatingUI = true;
+
+            switch (e.Action)
+            {
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                    {
+                        foreach (var added in e.NewItems)
+                            this.sourceFolderList.SelectedItems.Add(added);
+                        break;
+                    }
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                    {
+                        foreach (var removed in e.OldItems)
+                            this.sourceFolderList.SelectedItems.Remove(removed);
+                        break;
+                    }
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+                    {
+                        this.sourceFolderList.SelectedItems.Clear();
+                        break;
+                    }
+            }
+
+            this.updatingUI = false;
+        }
+
+        private void MainWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.vm != null)
+                this.vm.SelectedSourceDirectories.CollectionChanged -= SelectedSourceDirectories_CollectionChanged;
+
+            this.vm = this.DataContext as MainWindowViewModel;
+
+            if (this.vm != null)
+                this.vm.SelectedSourceDirectories.CollectionChanged += SelectedSourceDirectories_CollectionChanged;
+        }
+
+        private void SourceFolderList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.updatingUI)
+                return;
+
+            if (this.vm == null)
+                return;
+
+            this.updatingVM = true;
+
             foreach (var removed in e.RemovedItems.OfType<string>())
-                vm.SelectedSourceDirectories.Remove(removed);
+                this.vm.SelectedSourceDirectories.Remove(removed);
 
             foreach (var added in e.AddedItems.OfType<string>())
-                vm.SelectedSourceDirectories.Add(added);
+                this.vm.SelectedSourceDirectories.Add(added);
+
+            this.updatingVM = false;
         }
 
         private void SourceFolderList_Drop(object sender, DragEventArgs e)
