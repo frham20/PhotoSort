@@ -73,7 +73,7 @@ namespace PhotoSort.Views
                     }
                 case "IsValid":
                     {
-                        this.ProcessCommand.RaiseCanExecute();
+                        this.ProcessCommand.RaiseCanExecuteChanged();
                         break;
                     }
             }

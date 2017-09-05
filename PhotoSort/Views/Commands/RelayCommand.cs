@@ -20,11 +20,9 @@ namespace PhotoSort.Views.Commands
             this.canExecuteHandler = canExecute;
         }
 
-        public void RaiseCanExecute()
+        public void RaiseCanExecuteChanged()
         {
-            var handler = this.CanExecuteChanged;
-            if (handler != null)
-                handler(this, new EventArgs());
+            this.CanExecuteChanged?.Invoke(this, new EventArgs());
         }
 
         public bool CanExecute(object parameter)
@@ -37,8 +35,7 @@ namespace PhotoSort.Views.Commands
 
         public void Execute(object parameter)
         {
-            if (this.executeHandler != null)
-                this.executeHandler(parameter);
+            this.executeHandler?.Invoke(parameter);
         }
     }
 }
